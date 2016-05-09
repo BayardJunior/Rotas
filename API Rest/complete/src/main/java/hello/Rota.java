@@ -1,6 +1,5 @@
 package hello;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,31 +8,28 @@ import org.springframework.data.annotation.Id;
 public class Rota {
 
 	@Id
+	private String id;
 	private String name;
 	private Date routeDate;
 	private Integer vehicleId;
-	private Integer id;
 	private List<Parada> paradas;
 	private List<Coordenada> position;
 
 	public Rota() {
 		
-		position = new ArrayList<Coordenada>();
+//		position = new ArrayList<Coordenada>();
 		
 	}
-
-	public Rota(String nome, Integer id) {
-		this.name = nome;
-		this.vehicleId = id;
-	}
-
-	public Integer getId() {
+	
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+
+	public void setId(String id) {
 		this.id = id;
 	}
+
 
 	public String getName() {
 		return name;
