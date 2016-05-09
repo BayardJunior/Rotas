@@ -1,11 +1,11 @@
 package hello;
 
-public class Coordenada {
+public class Coordinate {
 
 	private double lat;
 	private double lng;
 
-	public Coordenada() {
+	public Coordinate() {
 
 	}
 

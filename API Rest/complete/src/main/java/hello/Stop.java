@@ -1,11 +1,11 @@
 package hello;
 
-public class Parada {
+public class Stop {
 
 	private String name;
-	private Coordenada position;
+	private Coordinate position;
 
-	public Parada() {
+	public Stop() {
 
 	}
 
@@ -17,11 +17,11 @@ public class Parada {
 		this.name = name;
 	}
 
-	public Coordenada getPosition() {
+	public Coordinate getPosition() {
 		return position;
 	}
 
-	public void setPosition(Coordenada position) {
+	public void setPosition(Coordinate position) {
 		this.position = position;
 	}
 }
