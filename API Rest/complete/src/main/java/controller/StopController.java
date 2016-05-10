@@ -1,4 +1,4 @@
-package hello;
+package controller;
 
 import java.util.Date;
 import java.util.List;
@@ -9,11 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import model.Route;
+import repository.RouteRepository;
+
 @RestController
 public class StopController {
 	
 	@Autowired
-	private RotaRepository repository;
+	private RouteRepository repository;
 
 	@RequestMapping(value = "/rotas", method = RequestMethod.GET)
 	public List<Route> findAll() {
@@ -23,7 +26,6 @@ public class StopController {
 	@RequestMapping(value = "/rotas", method = RequestMethod.POST)
 	public void post(@RequestBody Route route) {
 		route.setRouteDate(new Date());
-		repository.deleteAll();
 		repository.save(route);
 	}
 }

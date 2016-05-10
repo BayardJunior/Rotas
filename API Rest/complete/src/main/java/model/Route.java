@@ -1,4 +1,4 @@
-package hello;
+package model;
 
 import java.util.Date;
 import java.util.List;
@@ -59,5 +59,4 @@ public class Route {
 	public void setPosition(List<Coordinate> position) {
 		this.position = position;
 	}
-
 }
