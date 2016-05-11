@@ -13,10 +13,10 @@ import br.com.apirest.service.RouteService;
 
 @RestController
 public class StopController {
-	
+
 	@Autowired
 	private RouteService routeService;
-	
+
 	@RequestMapping(value = "/rotas", method = RequestMethod.GET)
 	public List<Route> findAll() {
 		return routeService.findAll();

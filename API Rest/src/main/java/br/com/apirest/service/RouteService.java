@@ -38,26 +38,29 @@ public class RouteService {
 			StringBuilder wayPoints = new StringBuilder();
 
 			for (int i = 1; i < route.getStops().size() - 1; i++) {
-				z = route.getStops().size()-1;
+				z = route.getStops().size() - 1;
 				wayPoints.append(route.getStops().get(i).getPosition().getLat()).append(",");
 				wayPoints.append(route.getStops().get(i).getPosition().getLng()).append("|");
 				System.out.println("-> " + wayPoints.toString());
 				System.out.println("\n");
 			}
-			/* 
-			 * Sempre a primeira coordenada do Json vai ser o ponto de inicio da minha rota
-			 * O ultimo ponto do Json, será o ponto do parada.	
+			/*
+			 * Sempre a primeira coordenada do Json vai ser o ponto de inicio da
+			 * minha rota O ultimo ponto do Json, será o ponto do parada.
 			 */
 			URI uri = UriComponentsBuilder.fromUriString(url)
-					.queryParam("origin", route.getStops().get(0).getPosition().getLat()+","+route.getStops().get(0).getPosition().getLng()) // primeiro
-					.queryParam("destination", route.getStops().get(z).getPosition().getLat()+","+route.getStops().get(z).getPosition().getLng()) // ultimo
+					.queryParam("origin",
+							route.getStops().get(0).getPosition().getLat() + ","
+									+ route.getStops().get(0).getPosition().getLng()) // primeiro
+					.queryParam("destination",
+							route.getStops().get(z).getPosition().getLat() + ","
+									+ route.getStops().get(z).getPosition().getLng()) // ultimo
 					.queryParam("waypoints", wayPoints.toString())
-					.queryParam("key", "AIzaSyBlF6yNQ_2gbJSyIaiDnz0cuslaWWjNs_Q")
-					.build().toUri();
+					.queryParam("key", "AIzaSyBlF6yNQ_2gbJSyIaiDnz0cuslaWWjNs_Q").build().toUri();
 
 			System.out.println(uri);
 			String response = restTemplate.getForObject(uri, String.class);
-		
+
 			System.out.println(response);
 
 		} catch (Exception ex) {
