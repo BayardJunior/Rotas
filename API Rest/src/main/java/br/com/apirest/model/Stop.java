@@ -1,4 +1,4 @@
-package model;
+package br.com.apirest.model;
 
 public class Stop {
 

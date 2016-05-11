@@ -1,4 +1,4 @@
-package model;
+package br.com.apirest.model;
 
 import java.util.Date;
 import java.util.List;
@@ -15,9 +15,7 @@ public class Route {
 	private List<Coordinate> position;
 
 	public Route() {
-
-		// position = new ArrayList<Coordenada>();
-
+		
 	}
 	
 	public String getId() {
