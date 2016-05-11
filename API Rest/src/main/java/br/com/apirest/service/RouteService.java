@@ -46,7 +46,7 @@ public class RouteService {
 			}
 			/* 
 			 * Sempre a primeira coordenada do Json vai ser o ponto de inicio da minha rota
-			 * O ultimo ponto do Json, será o ponto do parada.
+			 * O ultimo ponto do Json, será o ponto do parada.	
 			 */
 			URI uri = UriComponentsBuilder.fromUriString(url)
 					.queryParam("origin", route.getStops().get(0).getPosition().getLat()+","+route.getStops().get(0).getPosition().getLng()) // primeiro
@@ -57,7 +57,7 @@ public class RouteService {
 
 			System.out.println(uri);
 			String response = restTemplate.getForObject(uri, String.class);
-
+		
 			System.out.println(response);
 
 		} catch (Exception ex) {
