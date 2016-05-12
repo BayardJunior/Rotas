@@ -1,9 +1,15 @@
-package br.com.apirest.model;
+package br.com.apirest.service.google;
 
-public class Legs {
+import br.com.apirest.model.Coordinate;
+
+public class Leg {
 
 	private Coordinate start_location;
 	private Coordinate end_location;
+
+	public Leg() {
+
+	}
 
 	public Coordinate getStart_location() {
 		return start_location;

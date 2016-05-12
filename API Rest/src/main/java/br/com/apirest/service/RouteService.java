@@ -1,6 +1,7 @@
 package br.com.apirest.service;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,8 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import br.com.apirest.model.Coordinate;
 import br.com.apirest.model.Route;
 import br.com.apirest.repository.RouteRepository;
+import br.com.apirest.service.google.GoogleRoute;
 
 @Service
 public class RouteService {
@@ -25,46 +28,36 @@ public class RouteService {
 	}
 
 	public void make(Route route) {
-
 		route.setRouteDate(new Date());
-		getRouteFromGoogleDirections(route);
+		route.setPosition(getRouteFromGoogleDirections(route));
 		repository.save(route);
 	}
 
-	private void getRouteFromGoogleDirections(Route route) {
+	private List<Coordinate> getRouteFromGoogleDirections(Route route) {
 		try {
 			String url = "https://maps.googleapis.com/maps/api/directions/json";
-			int z = 0;
-			StringBuilder wayPoints = new StringBuilder();
 
+			List<String> wayPoints = new ArrayList<>();
 			for (int i = 1; i < route.getStops().size() - 1; i++) {
-				z = route.getStops().size() - 1;
-				wayPoints.append(route.getStops().get(i).getPosition().getLat()).append(",");
-				wayPoints.append(route.getStops().get(i).getPosition().getLng()).append("|");
-				System.out.println("-> " + wayPoints.toString());
-				System.out.println("\n");
+				Coordinate current = route.getStops().get(i).getPosition();
+				wayPoints.add(current.toString());
 			}
-			/*
-			 * Sempre a primeira coordenada do Json vai ser o ponto de inicio da
-			 * minha rota O ultimo ponto do Json, será o ponto do parada.
-			 */
+			Coordinate primeiro = route.getStops().get(0).getPosition();
+			Coordinate ultimo = route.getStops().get(route.getStops().size() - 1).getPosition();
+
 			URI uri = UriComponentsBuilder.fromUriString(url)
-					.queryParam("origin",
-							route.getStops().get(0).getPosition().getLat() + ","
-									+ route.getStops().get(0).getPosition().getLng()) // primeiro
-					.queryParam("destination",
-							route.getStops().get(z).getPosition().getLat() + ","
-									+ route.getStops().get(z).getPosition().getLng()) // ultimo
-					.queryParam("waypoints", wayPoints.toString())
+					.queryParam("origin", primeiro.toString())
+					.queryParam("destination", ultimo.toString())
+					.queryParam("waypoints", String.join("|", wayPoints))
 					.queryParam("key", "AIzaSyBlF6yNQ_2gbJSyIaiDnz0cuslaWWjNs_Q").build().toUri();
 
-			System.out.println(uri);
-			String response = restTemplate.getForObject(uri, String.class);
-
-			System.out.println(response);
+			GoogleRoute googleRoute = restTemplate.getForObject(uri, GoogleRoute.class);
+			
+			return googleRoute.getCoordinate();
 
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
+			return null;
 		}
 	}
 

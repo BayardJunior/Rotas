@@ -24,4 +24,9 @@ public class Coordinate {
 	public void setLng(double lng) {
 		this.lng = lng;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("%s,%s", this.getLat(), this.getLng());
+	}
 }
