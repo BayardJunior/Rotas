@@ -28,6 +28,7 @@ public class RouteService {
 	}
 
 	public void make(Route route) {
+		
 		route.setRouteDate(new Date());
 		route.setPosition(getRouteFromGoogleDirections(route));
 		repository.save(route);
@@ -45,14 +46,12 @@ public class RouteService {
 			Coordinate primeiro = route.getStops().get(0).getPosition();
 			Coordinate ultimo = route.getStops().get(route.getStops().size() - 1).getPosition();
 
-			URI uri = UriComponentsBuilder.fromUriString(url)
-					.queryParam("origin", primeiro.toString())
-					.queryParam("destination", ultimo.toString())
-					.queryParam("waypoints", String.join("|", wayPoints))
+			URI uri = UriComponentsBuilder.fromUriString(url).queryParam("origin", primeiro.toString())
+					.queryParam("destination", ultimo.toString()).queryParam("waypoints", String.join("|", wayPoints))
 					.queryParam("key", "AIzaSyBlF6yNQ_2gbJSyIaiDnz0cuslaWWjNs_Q").build().toUri();
 
 			GoogleRoute googleRoute = restTemplate.getForObject(uri, GoogleRoute.class);
-			
+
 			return googleRoute.getCoordinate();
 
 		} catch (Exception ex) {
